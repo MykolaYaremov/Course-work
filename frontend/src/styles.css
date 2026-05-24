@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+/* 1. Робимо всі скроли на сайті плавними за замовчуванням */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Додаємо анімацію для головної обгортки */
+.page-wrapper {
+  /* Сторінка буде з'являтися 0.4 секунди з ефектом ease-out */
+  animation: fadeAndSlideIn 0.4s ease-out forwards;
+}
+
+/* 3. Сама магія появи (з прозорого в видиме + легкий рух знизу вверх) */
+@keyframes fadeAndSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px); /* Починаємо трохи нижче */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);    /* Стаємо на своє місце */
+  }
+}
+
+/* Анімація появи */
+.fade-in-view {
+  animation: smoothTransition 0.5s ease-out;
+}
+
+@keyframes smoothTransition {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); /* Легкий рух знизу вверх */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Додамо ефект розмиття при завантаженні (опціонально) */
+.loading-blur {
+  filter: blur(4px);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: #f4f6f8;
+}
+
+* {
+  box-sizing: border-box;
+}
