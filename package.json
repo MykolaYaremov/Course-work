@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "leaflet": "^1.9.4",
+    "zone.js": "^0.16.2"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21"
+  }
+}

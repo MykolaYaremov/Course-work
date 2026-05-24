@@ -1,0 +1,35 @@
+# Залежності (node_modules)
+node_modules/
+/src/node_modules
+/package-lock.json
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Angular (Збірка та кеш)
+.angular/
+/dist/
+/tmp/
+/out-tsc
+/bazel-out
+
+# Конфігурації середовища (секрети, якщо будуть)
+.env
+.env.local
+
+# Налаштування редакторів (VS Code, WebStorm і т.д.)
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Системні файли
+.DS_Store
+Thumbs.db
