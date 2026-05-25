@@ -90,6 +90,36 @@ export class AppComponent implements OnInit {
     this.customModal.isVisible = false;
   }
 
+  // ==========================================
+  // ЛОГІКА ДЛЯ МОДАЛКИ ПІДТВЕРДЖЕННЯ (ЗАМІНА CONFIRM)
+  // ==========================================
+  confirmModal = {
+    isVisible: false,
+    title: '',
+    message: '',
+    onConfirm: () => {} // Тут зберігатимемо дію, яку треба виконати при згоді
+  };
+
+  openConfirmModal(title: string, message: string, onConfirm: () => void): void {
+    this.confirmModal = {
+      isVisible: true,
+      title,
+      message,
+      onConfirm
+    };
+  }
+
+  closeConfirmModal(): void {
+    this.confirmModal.isVisible = false;
+  }
+
+  executeConfirm(): void {
+    if (this.confirmModal.onConfirm) {
+      this.confirmModal.onConfirm(); // Виконуємо збережену дію
+    }
+    this.closeConfirmModal();
+  }
+
   // ==========================
   // КОШИК
   // ==========================
@@ -769,31 +799,39 @@ export class AppComponent implements OnInit {
   }
 
   deleteOrder(order: any): void {
-    const confirmMsg = `Ви впевнені, що хочете скасувати замовлення #${order.order_number || order.id}?\n\nВсі товари з цього замовлення автоматично повернуться на баланс вашої аптеки.`;
+    const confirmMsg = `Ви впевнені, що хочете скасувати замовлення <b>#${order.order_number || order.id}</b>?<br><br>Всі товари з цього замовлення автоматично повернуться на баланс вашої аптеки.`;
 
-    if (confirm(confirmMsg)) {
+    this.openConfirmModal('🗑️ Скасування замовлення', confirmMsg, () => {
+      // Цей код виконається ТІЛЬКИ якщо користувач натисне "Підтвердити"
       this.medicineService.deleteOrder(order.id).subscribe({
         next: () => {
           this.showCustomModal('🗑️ Замовлення скасовано', 'Замовлення успішно видалено, а товари повернуто на склад.', 'success');
-          // Видаляємо замовлення з локального масиву, щоб воно зникло з екрану миттєво
+          // Видаляємо замовлення з локального масиву
           this.pharmacistOrders = this.pharmacistOrders.filter(o => o.id !== order.id);
         },
         error: () => {
           this.showCustomModal('❌ Помилка', 'Не вдалося видалити замовлення. Спробуйте пізніше.', 'error');
         }
       });
-    }
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   markOrderCompleted(order: any): void {
-    if (confirm(`Підтверджуєте, що замовлення #${order.id} видано клієнту?`)) {
+    const confirmMsg = `Підтверджуєте, що замовлення <b>#${order.order_number || order.id}</b> було успішно зібрано та видано клієнту?`;
+
+    this.openConfirmModal('✅ Підтвердження видачі', confirmMsg, () => {
       this.medicineService.updateOrderStatus(order.id, 'completed').subscribe({
         next: () => {
           order.status = 'completed';
+          this.showCustomModal('Успіх!', 'Замовлення успішно видано та закрито.', 'success');
         },
-        error: (err) => alert('Помилка при оновленні статусу на сервері')
+        error: (err) => {
+          this.showCustomModal('❌ Помилка', 'Помилка при оновленні статусу на сервері.', 'error');
+        }
       });
-    }
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   loadPharmacistOrders(): void {

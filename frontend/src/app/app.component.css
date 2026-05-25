@@ -1635,16 +1635,17 @@
 /* Контейнер для кнопок дій */
 .order-actions-group {
   display: flex;
-  gap: 10px; /* Фіксована відстань між кнопками */
+  gap: 8px;                 /* Трохи зменшуємо відстань між кнопками для економії місця */
   align-items: center;
   flex-grow: 1;
   justify-content: flex-end;
+  flex-wrap: wrap;          /* Якщо екран буде критично вузьким, кнопки акуратно перенесуться */
 }
 
-/* БАЗОВИЙ СТИЛЬ КНОПОК ФАРМАЦЕВТА (Робляться ідентичними) */
+/* БАЗОВИЙ СТИЛЬ КНОПОК ФАРМАЦЕВТА (Тепер вони 100% близнюки) */
 .pharmacist-btn {
-  height: 42px; /* Однакова висота для обох кнопок */
-  padding: 0 16px;
+  height: 38px;             /* Робимо їх трохи нижчими (було 42px) — так вони компактніші */
+  padding: 0 12px;          /* Акуратні бокові відступи */
   border: none;
   border-radius: 8px;
   font-size: 13px;
@@ -1655,33 +1656,35 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  white-space: nowrap;
-  flex: 1; /* Кнопки ділитимуть доступний простір порівну */
-  max-width: 180px;
+  white-space: nowrap;      /* Текст не буде розриватися */
+  flex: 1;                  /* Кнопки ділять простір порівну */
+  min-width: 95px;          /* Мінімальний поріг стискання */
+  max-width: 130px;         /* ОБМЕЖЕННЯ: тепер вони не розлазяться ширше ніж 130px */
 }
 
 .pharmacist-btn span {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .pharmacist-btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .pharmacist-btn:active {
   transform: translateY(0);
 }
 
-/* Індивідуальні кольори */
-.btn-ready {
+/* ІНДИВІДУАЛЬНІ КОЛЬОРИ (Весь дизайн тепер в одному місці) */
+.btn-ready,
+.btn-complete {
   background: #27ae60;
   color: white;
 }
 
-.btn-complete {
-  background: #27ae60;
+.btn-delete {
+  background: #ff7675;
   color: white;
 }
 /* ==========================================

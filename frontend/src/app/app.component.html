@@ -641,7 +641,12 @@
             <div class="order-info">
               <p>👤 <b>Пацієнт:</b> {{ order.customer_name }}</p>
               <p>📞 <b>Телефон:</b> {{ order.customer_phone }}</p>
-              <p>🏥 <strong>Аптека видачі: </strong> <span class="order-pharmacy-highlight">{{ order.pharmacy_name || 'Не вказано' }}</span> ({{ order.pharmacy_address }})</p>
+              <p>
+                🏥 <strong>Аптека видачі: </strong>
+                <span class="order-pharmacy-highlight">{{ order.pharmacy_name || 'Не вказано' }}</span>
+                <br>
+                <b>({{ order.pharmacy_address }})</b>
+              </p>
               <p class="order-timestamp">🕒 Створено: {{ order.created_at | date:'dd.MM.yyyy HH:mm' }}</p>
             </div>
 
@@ -659,23 +664,22 @@
               <span class="total-price">{{ order.total_price }} грн</span>
             </div>
 
-            <div class="order-actions-group" style="display: flex; gap: 10px;">
+            <div class="order-actions-group">
 
               <button *ngIf="order.status === 'new'"
                       (click)="markOrderReady(order)"
-                      class="pharmacist-btn btn-ready" style="flex: 1;">
+                      class="pharmacist-btn btn-ready">
                 <span>📦</span> Зібрати
               </button>
 
               <button *ngIf="order.status === 'ready'"
                       (click)="markOrderCompleted(order)"
-                      class="pharmacist-btn btn-complete" style="flex: 1;">
+                      class="pharmacist-btn btn-complete">
                 <span>✅</span> Видати
               </button>
 
               <button (click)="deleteOrder(order)"
-                      class="pharmacist-btn btn-delete"
-                      style="background: #ff7675; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.2s;">
+                      class="pharmacist-btn btn-delete">
                 <span>🗑️</span> Скасувати
               </button>
 
@@ -946,6 +950,22 @@
         Зрозуміло
       </button>
 
+    </div>
+  </div>
+  <div class="modal-overlay" *ngIf="confirmModal.isVisible" (click)="closeConfirmModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close-btn" (click)="closeConfirmModal()">✕</button>
+
+      <div class="modal-icon">❓</div>
+
+      <h2 class="modal-title info" style="color: #3b82f6;">{{ confirmModal.title }}</h2>
+
+      <div class="modal-body" style="text-align: center; font-size: 16px; color: #334155; margin-bottom: 25px;" [innerHTML]="confirmModal.message"></div>
+
+      <div style="display: flex; gap: 15px; margin-top: 10px;">
+        <button class="modal-btn" style="background: #e2e8f0; color: #334155; flex: 1; font-weight: 700;" (click)="closeConfirmModal()">Скасувати</button>
+        <button class="modal-btn" style="background: #27ae60; flex: 1; font-weight: 700;" (click)="executeConfirm()">Підтвердити</button>
+      </div>
     </div>
   </div>
 </div>
