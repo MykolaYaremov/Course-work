@@ -88,6 +88,7 @@
   font-size: 15px;
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
+  animation: fadeInMenu 0.2s ease-out forwards;
 }
 
 .nav-link:hover {
@@ -666,6 +667,7 @@
   z-index: 1000;
   min-height: 400px;
   border: 1px solid #eee;
+  animation: fadeInMenu 0.2s ease-out forwards;
 }
 .mega-menu-sidebar {
   width: 280px;
