@@ -11,7 +11,6 @@ app.use(express.json());
 // ПІДКЛЮЧЕННЯ ДО БД
 // ==========================
 
-// СТАЛО (ОПТИМІЗОВАНО):
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -204,7 +203,7 @@ app.post('/api/orders', async (req, res) => {
         pharmacy_id,
         items,
         total_price,
-        order_number // 1. ДОДАЛИ order_number СЮДИ
+        order_number
     } = req.body;
 
     if (!pharmacy_id || !items || items.length === 0) {
@@ -259,12 +258,12 @@ app.post('/api/orders', async (req, res) => {
             total_price,
             JSON.stringify(items),
             'new',
-            order_number // 2. ДОДАЛИ order_number У МАСИВ ЗНАЧЕНЬ
+            order_number
         ]);
 
         res.json({
             success: true,
-            orderId: result.insertId // Можете повертати й order_number, якщо треба на фронті
+            orderId: result.insertId
         });
 
     } catch (err) {

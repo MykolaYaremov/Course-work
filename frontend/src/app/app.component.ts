@@ -937,7 +937,7 @@ export class AppComponent implements OnInit {
     const payload = {
       id: this.discountForm.medicine_id,
       price: this.discountForm.new_price,
-      old_price: this.discountForm.old_price, // Передаємо стару ціну на сервер
+      old_price: this.discountForm.old_price,
     };
 
     this.medicineService.updateMedicinePrice(payload).subscribe({
